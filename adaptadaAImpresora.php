@@ -66,7 +66,7 @@ try {
     // $logo = EscposImage::load('images/Logo-Bambolina-Nuevo.jpg', false);
     // $printer->bitImage($logo);
 
-    $printer->text("Escuela de Danza\n");
+    $printer->text("Bambolina - Escuela de Danza\n");
     $printer->text("Recibo de Pago\n\n");
     $printer->setJustification(Printer::JUSTIFY_LEFT);
     $printer->text("Fecha: " . date("d/m/Y H:i:s", strtotime($datos['pagos_fecha'])) . "\n");
