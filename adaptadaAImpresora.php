@@ -44,6 +44,14 @@ if (isset($_GET['datos']) && isset($_GET['detalle_paquetes']) && isset($_GET['fe
     $metodos_usados = $_GET['metodos_usados'];
 }
 
+foreach ($_GET as $get) {
+    // echo "<br>";
+    // var_dump($get);
+    // echo "<br>";
+}
+
+// exit;
+
 // Conectar a la impresora
 $printerPort = 'LR2000'; // Usa el puerto exacto de tu impresora
 $connector = new WindowsPrintConnector($printerPort);
@@ -52,16 +60,17 @@ $printer = new Printer($connector);
 try {
     // Datos principales
     $printer->setJustification(Printer::JUSTIFY_CENTER);
-    $success_icon = EscposImage::load('images/success-icon.jpg', false);
-    $printer->bitImage($success_icon);
-    $logo = EscposImage::load('images/Logo-Bambolina-Nuevo.jpg', false);
-    $printer->bitImage($logo);
+
+    // $success_icon = EscposImage::load('images/success-icon.jpg', false);
+    // $printer->bitImage($success_icon);
+    // $logo = EscposImage::load('images/Logo-Bambolina-Nuevo.jpg', false);
+    // $printer->bitImage($logo);
 
     $printer->text("Escuela de Danza\n");
     $printer->text("Recibo de Pago\n\n");
     $printer->setJustification(Printer::JUSTIFY_LEFT);
     $printer->text("Fecha: " . date("d/m/Y H:i:s", strtotime($datos['pagos_fecha'])) . "\n");
-    $printer->text("Alumno: " . $datos['clientes_nombre'] . ' ' . $datos['clientes_apellido'] . "\n\n");
+    $printer->text("Alumno: " . $datos['clientes_nombre'] . "\n\n");
 
     // Métodos de pago
     $printer->text("Método de Pago:\n");
@@ -92,6 +101,7 @@ try {
         foreach ($data as $dia) {
             $printer->text(dia_semana($dia['dia']) . "\n");
             foreach ($dia as $horario) {
+                if (!is_array($horario)) continue;
                 foreach ($horario as $clase) {
                     if (!in_array($clase, $detectar_duplicados)) {
                         $detectar_duplicados[] = $clase;
@@ -109,6 +119,16 @@ try {
 
     // Corta el papel
     $printer->cut();
+    echo '
+    <script type="text/javascript">
+        window.onload = function() {
+            // Espera 3 segundos antes de cerrar la ventana para asegurar que todo se cargue
+            setTimeout(function() {
+                window.close();
+            }, 3000); // 3000 milisegundos = 3 segundos
+        };
+    </script>
+    ';
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage();
 } finally {
