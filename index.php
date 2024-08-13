@@ -1,10 +1,20 @@
 <?php
-$nombredelhost = "";
-$physical_addrs = "";
-$tipo = $_GET['tipo'];
-$pdfUrl = $nombredelhost . '/archivos/recibos/' . $_GET['pdf'];
-$localFilePath = $physical_addrs . '/archivos/' . $_GET['tipo'] . '/' . $_GET['pdf'];
+require 'vendor/autoload.php';
 
+use setasign\Fpdi\Fpdi;
+use Intervention\Image\ImageManager;
+use Mike42\Escpos\Printer;
+use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+
+// Configura las rutas
+$nombredelhost = "https://devssoftbusiness.com/dev";
+$physical_addrs = "C:/wamp64/www/bambolinaprinter"; // Ajusta esta ruta según tu configuración
+$tipo = $_GET['tipo'];
+$pdfUrl = $nombredelhost . '/archivos/' . $_GET['tipo'] . '/' . $_GET['pdf'];
+$localFilePath = $physical_addrs . '/archivos/' . $_GET['tipo'] . '/' . $_GET['pdf'];
+$imagePath = $physical_addrs . '/archivos/' . $_GET['tipo'] . '/' . pathinfo($_GET['pdf'], PATHINFO_FILENAME) . '.png';
+
+// Descargar el archivo PDF
 $ch = curl_init($pdfUrl);
 $fp = fopen($localFilePath, 'wb');
 curl_setopt($ch, CURLOPT_FILE, $fp);
@@ -12,7 +22,7 @@ curl_setopt($ch, CURLOPT_HEADER, 0);
 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 curl_setopt($ch, CURLOPT_FAILONERROR, true);
 curl_setopt($ch, CURLOPT_TIMEOUT, 60);
-curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'); // User agent
+curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0');
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 curl_exec($ch);
 if (curl_errno($ch)) {
@@ -28,25 +38,36 @@ if (isset($error_msg)) {
     die("Error al descargar el archivo: $error_msg");
 }
 
-if (file_exists($localFilePath)) {
-    // Nombre de la impresora configurada en Windows
-    $printerName = 'Nombre de tu impresora por default'; // Impresora default
+// Crear una instancia del manejador de imágenes especificando el driver
+$manager = new ImageManager(['driver' => 'gd']);
 
-    if ($_GET['tipo'] == 'recibos') {
-        $printerName = 'Nombre de tu impresora para recibos';
-    } elseif ($_GET['tipo'] == 'contratos') {
-        $printerName = 'Nombre de tu impresora para contratos';
-    }
+// Convertir PDF a imagen usando setasign/fpdi y Intervention Image
+$pdf = new Fpdi();
+$pdf->AddPage();
+$pdf->setSourceFile($localFilePath);
+$page = $pdf->importPage(1);
+$pdf->useTemplate($page);
 
-    $command = "powershell.exe -Command \"Start-Process -FilePath '$localFilePath' -ArgumentList '/p /h $printerName' -NoNewWindow -Wait\"";
-    exec($command, $output, $return_var);
+// Guardar el PDF en una variable
+$pdfContent = $pdf->Output('', 'S');
 
-    if ($return_var === 0) {
-        header("Location: $pdfUrl");
-    } else {
-        echo "Hubo un error al enviar el documento a la impresora.";
-        print_r($output);
-    }
-} else {
-    echo "Error al descargar el archivo.";
+// Crear una imagen a partir del contenido del PDF
+$image = $manager->make($pdfContent);
+$image->save($imagePath);
+
+// Imprimir la imagen
+try {
+    $printerPort = 'LR2000'; // Usa el puerto exacto de tu impresora
+    $connector = new WindowsPrintConnector($printerPort);
+    $printer = new Printer($connector);
+
+    // Imprimir la imagen
+    $printer->setJustification(Printer::JUSTIFY_CENTER);
+    $printer->graphics($imagePath);
+    $printer->cut();
+    $printer->close();
+
+    echo "Impresión realizada.";
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
 }

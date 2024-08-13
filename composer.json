@@ -1,0 +1,10 @@
+{
+    "require": {
+        "mike42/escpos-php": "*",
+        "dompdf/dompdf": "*",
+        "spatie/pdf-to-image": "^1.2",
+        "setasign/fpdi": "^2.6",
+        "intervention/image": "^3.7",
+        "setasign/fpdf": "^1.8"
+    }
+}
