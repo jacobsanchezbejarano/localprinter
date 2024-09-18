@@ -99,7 +99,7 @@ try {
         $printer->text("Horario:\n");
         $detectar_duplicados = [];
         foreach ($data as $dia) {
-            $printer->text(dia_semana($dia['dia']) . "\n");
+            $printer->text($dia['dia'] . "\n");
             foreach ($dia as $horario) {
                 if (!is_array($horario)) continue;
                 foreach ($horario as $clase) {
