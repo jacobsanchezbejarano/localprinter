@@ -36,13 +36,14 @@ function dia_semana($dia)
     ][$dia];
 }
 
-if (isset($_GET['datos']) && isset($_GET['detalle_paquetes']) && isset($_GET['fechas_inicio']) && isset($_GET['data']) && isset($_GET['metodos_usados'])) {
-    $datos = $_GET['datos'];
-    $detalle_paquetes = $_GET['detalle_paquetes'];
-    $fechas_inicio = $_GET['fechas_inicio'];
-    $data = $_GET['data'];
-    $metodos_usados = $_GET['metodos_usados'];
-}
+$data = [];
+
+if (isset($_GET['datos'])) $datos = $_GET['datos'];
+if (isset($_GET['detalle_paquetes']))  $detalle_paquetes = $_GET['detalle_paquetes'];
+if (isset($_GET['fechas_inicio']))  $fechas_inicio = $_GET['fechas_inicio'];
+if (isset($_GET['data']))  $data = $_GET['data'];
+if (isset($_GET['metodos_usados']))  $metodos_usados = $_GET['metodos_usados'];
+
 
 foreach ($_GET as $get) {
     // echo "<br>";
