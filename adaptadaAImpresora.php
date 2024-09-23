@@ -52,7 +52,8 @@ function escribir_log($mensaje, $archivo = "printer.log")
     }
 }
 
-escribir_log(time(), ' | ', $_GET['datos']['pagos_id'], ' | ', $_SERVER['REMOTE_ADDR'], '\n');
+$datos_pago_print = time() . ' | ' . $_GET['datos']['pagos_id'] . ' | ' . $_SERVER['REMOTE_ADDR'] . '\n';
+escribir_log($datos_pago_print);
 
 escribir_log($_GET, '\n');
 
