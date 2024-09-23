@@ -36,6 +36,26 @@ function dia_semana($dia)
     ][$dia];
 }
 
+function escribir_log($mensaje, $archivo = "printer.log")
+{
+    try {
+        $handle = fopen($archivo, "a");
+        if ($handle) {
+            fwrite($handle, date('Y-m-d H:i:s') . " - " . $mensaje . "\n");
+            fclose($handle);
+        } else {
+            throw new Exception("No se pudo abrir el archivo de log: $archivo");
+        }
+    } catch (Exception $e) {
+        // Manejar el error, por ejemplo, enviar un correo electrónico
+        echo "Error al escribir en el log: " . $e->getMessage();
+    }
+}
+
+escribir_log(time(), ' | ', $_GET['datos']['pagos_id'], ' | ', $_SERVER['REMOTE_ADDR'], '\n');
+
+escribir_log($_GET, '\n');
+
 $data = [];
 
 if (isset($_GET['datos'])) $datos = $_GET['datos'];
