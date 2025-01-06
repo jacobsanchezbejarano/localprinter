@@ -123,7 +123,7 @@ try {
     <script type="text/javascript">
         window.onload = function() {
             setTimeout(function() {
-                window.close();
+               location.href = "' . $host . '/archivos/recibos/' . $pdfname . '";
             }, 3000);
         };
     </script>';

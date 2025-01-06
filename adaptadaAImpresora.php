@@ -89,8 +89,7 @@ try {
         window.onload = function() {
             // Espera 3 segundos antes de cerrar la ventana para asegurar que todo se cargue
             setTimeout(function() {
-                window.open("' . $host . '/archivos/recibos/' . $pdfname . '");
-                window.close();
+                location.href = "' . $host . '/archivos/recibos/' . $pdfname . '";
             }, 3000); // 3000 milisegundos = 3 segundos
         };
     </script>
