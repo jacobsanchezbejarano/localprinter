@@ -1,0 +1,143 @@
+2025-01-06 13:25:49 - 1736169949 | 69 | ::1\n
+2025-01-06 13:25:49 - Array
+(
+    [datos] => Array
+        (
+            [pagos_id] => 69
+            [clientes_id] => 8
+            [pagos_monto] => 500.00
+            [pagos_fecha] => 2025-01-06 09:25:47
+            [paquetes_ids] => 1
+            [pagos_enviorecibo] => 0
+            [pagos_estado] => 1
+            [usuarios_id] => 1
+            [detallearchivos_id] => 0
+            [clientes_nombre] => ADEMIN SOLEDO OLSUIN
+            [clientes_apellido] => 
+            [clientes_nacimiento] => 1981-08-24
+            [clientes_telefonoemergencia] => 69217594
+            [clientes_fecharegistro] => 2024-08-12 12:12:45
+            [clientes_carnet] => 3873397
+            [clientes_genero] => F
+            [sucursales_direccion] => Av. Busch 3er anillo
+        )
+
+    [detalle_paquetes] => Array
+        (
+            [0] => Array
+                (
+                    [paquetes_id] => 1
+                    [paquetes_nombre] => COMM. DANCE AVANZADO
+                    [paquetes_precio] => 500.00
+                    [paquetes_duracionmeses] => 1
+                    [paquetes_fechacreacion] => 2024-07-12 22:58:42
+                    [paquetes_duracionclases] => 0
+                    [paquetes_estado] => 1
+                    [paquetes_tipo] => 0
+                    [sucursales_id] => 1
+                    [paquetes_clientes_preciocobrado] => 500.00
+                )
+
+        )
+
+    [fechas_inicio] => Array
+        (
+            [0] => Array
+                (
+                    [paquetes_nombre] => COMM. DANCE AVANZADO
+                    [paquetes_clientes_fechainicio] => 2025-01-06
+                    [paquetes_clientes_fechavencimiento] => 2025-02-06
+                )
+
+        )
+
+    [data] => Array
+        (
+            [1] => Array
+                (
+                    [dia] => 1
+                    [clases] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [clases_id] => 25
+                                    [clases_nombre] => TEst class bug - Diana G.
+                                    [clases_horarios_id] => 59
+                                    [hora_inicio] => 09:30
+                                    [hora_fin] => 10:50
+                                )
+
+                        )
+
+                )
+
+            [2] => Array
+                (
+                    [dia] => 2
+                    [clases] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [clases_id] => 1
+                                    [clases_nombre] => COMM. DANCE AVANZADO - Felipe Cesari
+                                    [clases_horarios_id] => 1
+                                    [hora_inicio] => 17:30
+                                    [hora_fin] => 19:00
+                                )
+
+                        )
+
+                )
+
+            [4] => Array
+                (
+                    [dia] => 4
+                    [clases] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [clases_id] => 1
+                                    [clases_nombre] => COMM. DANCE AVANZADO - Felipe Cesari
+                                    [clases_horarios_id] => 2
+                                    [hora_inicio] => 17:30
+                                    [hora_fin] => 19:00
+                                )
+
+                        )
+
+                )
+
+            [5] => Array
+                (
+                    [dia] => 5
+                    [clases] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [clases_id] => 1
+                                    [clases_nombre] => COMM. DANCE AVANZADO - Felipe Cesari
+                                    [clases_horarios_id] => 3
+                                    [hora_inicio] => 17:30
+                                    [hora_fin] => 19:00
+                                )
+
+                        )
+
+                )
+
+        )
+
+    [metodos_usados] => Array
+        (
+            [0] => Array
+                (
+                    [metodospago_nombre] => Efectivo
+                    [pagos_metodospago_monto] => 500.00
+                )
+
+        )
+
+    [host] => http://localhost/bambolina
+    [pdfname] => Recibo_69_1736169949.pdf
+)
+\n
